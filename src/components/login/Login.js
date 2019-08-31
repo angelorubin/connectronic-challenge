@@ -1,12 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Grid, Button, makeStyles, InputLabel } from "@material-ui/core";
+import { Grid, Button, makeStyles } from "@material-ui/core";
 import { blue } from "@material-ui/core/colors";
 
 const useStyles = makeStyles({
-  root: {
-    backgroundColor: blue[300]
-  },
+  root: {},
   divider: {
     marginTop: 1,
     color: "red",
@@ -22,24 +20,33 @@ export const Login = () => {
   return (
     <Grid
       container
+      spacing={2}
       direction="column"
       alignItems="center"
       justify="center"
       className={`${classes.grid} ${classes.root}`}
     >
       <Grid item>
-        <h2>Login</h2>
+        <h2>Connectronic</h2>
       </Grid>
       <Grid item>
-        <InputLabel>email</InputLabel>
+        <label> email </label>
         <input />
       </Grid>
-      <label>password</label>
-      <input />
-      <br />
-      <Button>
-        <Link to={"/dashboard"}>Logar</Link>
-      </Button>
+      <Grid item>
+        <label> password </label>
+        <input />
+      </Grid>
+      <Grid item>
+        <Button
+          color="primary"
+          variant="inset"
+          component={Link}
+          to={"/dashboard"}
+        >
+          entrar
+        </Button>
+      </Grid>
     </Grid>
   );
 };
