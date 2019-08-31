@@ -1,5 +1,4 @@
 import { ADD_USER } from "../constants/actionTypes";
-import { http } from "../config";
 
 const INITIAL_STATE = {
   users: [

@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Table, Alert } from "reactstrap";
-import { http } from "../../config";
 import { UserEdit } from "./UserEdit";
-import { useDispatch, useSelector } from "react-redux";
+import { ADD_USER } from "../../constants/actionTypes";
 
 const styles = {
   root: {
@@ -17,7 +17,28 @@ const styles = {
 };
 
 export const UsersList = () => {
-  const users = useSelector(state => state.userReducer.users);
+  const { users } = useSelector(state => state.users);
+  console.log(users);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    /*
+    dispatch({
+      type: ADD_USER,
+      user: {
+        id: Math.random(),
+        fullname: "suzana gonzalez rubin",
+        email: "suzanarubin@gmail.com",
+        telephone: "(19) 3527-2118",
+        cellphone: "(19) 99187-2093"
+      }
+    });
+    */
+  }, []);
+
+  const fetchData = () => {
+    // setLoading(true);
+  };
 
   return users.length > 0 ? (
     <div style={styles.root}>
