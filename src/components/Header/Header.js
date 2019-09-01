@@ -121,7 +121,7 @@ export const Header = ({ children }) => {
                 <Typography>Painel</Typography>
               </IconButton>
             </Grid>
-            <Grid item>
+            <Grid item xs={9}>
               <IconButton color="inherit">
                 <Badge
                   className={classes.margin}
@@ -175,7 +175,7 @@ export const Header = ({ children }) => {
               <Icon>list</Icon>
             </ListItemIcon>
             <ListItemText>
-              <Link to="/list">Lista</Link>
+              <Link to="/list-categories">Categorias</Link>
             </ListItemText>
           </ListItem>
         </List>
