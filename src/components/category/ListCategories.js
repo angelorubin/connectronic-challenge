@@ -14,6 +14,7 @@ import {
   Button,
   Icon
 } from "@material-ui/core";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,28 +24,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const ListCategories = props => {
+  const categories = useSelector(state => state.categories);
   const { push } = props.history;
   const classes = useStyles();
-  const [categories, setCategories] = useState({
-    columns: [
-      { title: "Nome", field: "nome" },
-      { title: "Descrição", field: "descricao" }
-    ],
-    data: [
-      {
-        nome: "automovel",
-        descricao: "categoria dos automoveis"
-      },
-      {
-        nome: "motocicleta",
-        descricao: "categoria das motocicletas"
-      },
-      {
-        nome: "caminhão",
-        descricao: "categoria dos caminhões"
-      }
-    ]
-  });
 
   const [open, setOpen] = useState(false);
 
@@ -97,7 +79,7 @@ export const ListCategories = props => {
                 aria-labelledby="form-dialog-title"
               >
                 <DialogTitle id="form-dialog-title">
-                  Você irá apagar uma categoria !
+                  Você irá apagar uma categoria
                 </DialogTitle>
                 <DialogContent>
                   <DialogContentText>
