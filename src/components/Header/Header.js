@@ -15,9 +15,7 @@ import {
   ListItemIcon,
   ListItemText,
   Badge,
-  Grid,
-  Button,
-  Container
+  Grid
 } from "@material-ui/core";
 import { grey } from "@material-ui/core/colors";
 import { Link } from "react-router-dom";
@@ -104,10 +102,12 @@ export const Header = ({ children }) => {
           [classes.appBarShift]: open
         })}
       >
-        <Toolbar>
-          <Grid container>
+        <Toolbar disableGutter variant="regular">
+          <Grid container justify="flex-start" alignItems="center">
             <Grid item>
               <IconButton
+                disableFocusRipple
+                disableRipple
                 color="inherit"
                 aria-label="open drawer"
                 onClick={handleDrawerOpen}
@@ -121,7 +121,15 @@ export const Header = ({ children }) => {
                 <Typography>Painel</Typography>
               </IconButton>
             </Grid>
-            <Grid item xs={9}>
+          </Grid>
+
+          <Grid
+            container
+            direction="row"
+            justify="flex-end"
+            alignItems="center"
+          >
+            <Grid item>
               <IconButton color="inherit">
                 <Badge
                   className={classes.margin}
