@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   Grid,
   Icon,
@@ -25,7 +26,31 @@ const useStyles = makeStyles({
   }
 });
 
-export const AddCategory = () => {
+export const AddCategory = props => {
+  const categories = useSelector(state => state.categories);
+  const dispatch = useDispatch();
+
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+
+  const handleClick = e => {
+    const data = { nome: name, descricao: description };
+    dispatch({
+      type: "ADD_CATEGORY",
+      data: data
+    });
+    setName("");
+    setDescription("");
+  };
+
+  const handleChangeName = e => {
+    setName(e.target.value);
+  };
+
+  const handleChangeDescription = e => {
+    setDescription(e.target.value);
+  };
+
   const classes = useStyles();
   return (
     <Header>
@@ -56,6 +81,8 @@ export const AddCategory = () => {
                 id="name"
                 label="Nome"
                 type="text"
+                onChange={handleChangeName}
+                value={name}
                 variant="outlined"
               />
             </Grid>
@@ -66,6 +93,8 @@ export const AddCategory = () => {
                 id="description"
                 label="Descrição"
                 type="text"
+                onChange={handleChangeDescription}
+                value={description}
                 variant="outlined"
               />
             </Grid>
@@ -77,8 +106,8 @@ export const AddCategory = () => {
                 Voltar
               </Button>
             </Grid>
-            <Grid item justify="flex-end">
-              <Button variant="outlined" onClick={""}>
+            <Grid justify="flex-end">
+              <Button variant="outlined" onClick={handleClick}>
                 Salvar
               </Button>
             </Grid>
