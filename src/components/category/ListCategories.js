@@ -1,8 +1,19 @@
 import React, { useState } from "react";
-import { Header } from "../header/Header";
-import { Paper, makeStyles, Grid } from "@material-ui/core";
 import MaterialTable from "material-table";
-import { AddCategory } from "./AddCategory";
+import { Header } from "../header/Header";
+import { Link } from "react-router-dom";
+import {
+  Paper,
+  makeStyles,
+  Grid,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Button,
+  Icon
+} from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -11,73 +22,97 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const ListCategories = () => {
+export const ListCategories = props => {
+  const { push } = props.history;
   const classes = useStyles();
-  const [state, setState] = useState({
+  const [categories, setCategories] = useState({
     columns: [
-      { title: "Name", field: "name" },
-      { title: "Surname", field: "surname" },
-      { title: "Birth Year", field: "birthYear", type: "numeric" },
-      {
-        title: "Birth Place",
-        field: "birthCity",
-        lookup: { 34: "İstanbul", 63: "Sanlıurfa" }
-      }
+      { title: "Nome", field: "nome" },
+      { title: "Descrição", field: "descricao" }
     ],
     data: [
-      { name: "Mehmet", surname: "Baran", birthYear: 1987, birthCity: 63 },
       {
-        name: "Zerya Betül",
-        surname: "Baran",
-        birthYear: 2017,
-        birthCity: 34
+        nome: "automovel",
+        descricao: "categoria dos automoveis"
+      },
+      {
+        nome: "motocicleta",
+        descricao: "categoria das motocicletas"
+      },
+      {
+        nome: "caminhão",
+        descricao: "categoria dos caminhões"
       }
     ]
   });
+
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => setOpen(true);
+
+  const handleClose = () => setOpen(false);
 
   return (
     <Header>
       <Paper className={classes.root}>
         <Grid container spacing={1} direction="column">
           <Grid item xs={12} align="right">
-            <AddCategory />
+            <Button variant="outlined" component={Link} to="/add-category">
+              Adicionar <Icon>add</Icon>
+            </Button>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item>
             <Paper>
               <MaterialTable
+                actions={[
+                  {
+                    icon: "edit",
+                    tooltip: "Edit",
+                    onClick: (event, rowData) => {
+                      push({
+                        pathname: "/edit-category",
+                        state: rowData
+                      });
+                    }
+                  },
+                  {
+                    icon: "delete",
+                    tooltip: "Delete",
+                    onClick: (event, rowData) => {
+                      setOpen(true);
+                    }
+                  }
+                ]}
                 title="Categorias"
-                columns={state.columns}
-                data={state.data}
-                editable={{
-                  onRowAdd: newData =>
-                    new Promise(resolve => {
-                      setTimeout(() => {
-                        resolve();
-                        const data = [...state.data];
-                        data.push(newData);
-                        setState({ ...state, data });
-                      }, 600);
-                    }),
-                  onRowUpdate: (newData, oldData) =>
-                    new Promise(resolve => {
-                      setTimeout(() => {
-                        resolve();
-                        const data = [...state.data];
-                        data[data.indexOf(oldData)] = newData;
-                        setState({ ...state, data });
-                      }, 600);
-                    }),
-                  onRowDelete: oldData =>
-                    new Promise(resolve => {
-                      setTimeout(() => {
-                        resolve();
-                        const data = [...state.data];
-                        data.splice(data.indexOf(oldData), 1);
-                        setState({ ...state, data });
-                      }, 600);
-                    })
+                options={{
+                  actionsColumnIndex: -1
                 }}
+                columns={categories.columns}
+                data={categories.data}
               />
+              {/* Delete Dialog */}
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="form-dialog-title"
+              >
+                <DialogTitle id="form-dialog-title">
+                  Você irá apagar uma categoria !
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                    Tem certeza que deseja apagá-la?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button size="small" onClick={handleClose} color="primary">
+                    Cancelar
+                  </Button>
+                  <Button onClick={handleClose} size="small">
+                    Apagar
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </Paper>
           </Grid>
         </Grid>
