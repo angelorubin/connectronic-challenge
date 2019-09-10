@@ -24,13 +24,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const ListCategories = props => {
-  const categories = useSelector(state => state.categories);
+  const { categories, columns } = useSelector(state => state.categories);
   const { push } = props.history;
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
-
-  const handleClickOpen = () => setOpen(true);
 
   const handleClose = () => setOpen(false);
 
@@ -39,7 +37,7 @@ export const ListCategories = props => {
       <Paper className={classes.root}>
         <Grid container spacing={1} direction="column">
           <Grid item xs={12} align="right">
-            <Button variant="outlined" component={Link} to="/add-category">
+            <Button variant="outlined" component={Link} to="/create-category">
               Adicionar <Icon>add</Icon>
             </Button>
           </Grid>
@@ -69,8 +67,8 @@ export const ListCategories = props => {
                 options={{
                   actionsColumnIndex: -1
                 }}
-                columns={categories.columns}
-                data={categories.data}
+                columns={columns}
+                data={categories}
               />
               {/* Delete Dialog */}
               <Dialog

@@ -1,21 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Grid, Button, TextField, makeStyles } from "@material-ui/core";
-import { blue } from "@material-ui/core/colors";
+import { makeStyles, Grid, Button, TextField } from "@material-ui/core";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   root: {
-    margin: 0,
-    width: "100vw",
-    height: "100vh"
-  },
-  border: {
-    borderColor: blue[50]
+    padding: theme.spacing(3, 2)
   }
-});
+}));
 
 export const Login = () => {
   const classes = useStyles();
+
   return (
     <Grid
       spacing={2}
@@ -26,7 +21,7 @@ export const Login = () => {
       justify="center"
     >
       <Grid item>
-        <h2>Connectronic</h2>
+        <h2>React Redux MUI Panel</h2>
       </Grid>
       <Grid item>
         <TextField

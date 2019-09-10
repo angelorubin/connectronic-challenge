@@ -1,4 +1,4 @@
-import React, { Children } from "react";
+import React from "react";
 import { Header } from "../header/Header";
 import { Grid, Paper, makeStyles } from "@material-ui/core";
 
@@ -13,7 +13,7 @@ const useStyles = makeStyles({
   }
 });
 
-export const Dashboard = ({ children }) => {
+export const Dashboard = () => {
   const classes = useStyles();
 
   return (
