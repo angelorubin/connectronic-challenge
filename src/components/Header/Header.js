@@ -102,7 +102,7 @@ export const Header = ({ children }) => {
           [classes.appBarShift]: open
         })}
       >
-        <Toolbar disableGutter variant="regular">
+        <Toolbar variant="regular">
           <Grid container justify="flex-start" alignItems="center">
             <Grid item>
               <IconButton
