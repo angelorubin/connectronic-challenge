@@ -14,7 +14,8 @@ import {
   Button,
   Icon
 } from "@material-ui/core";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { Creators } from "../../store/ducks/categories";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,16 +26,24 @@ const useStyles = makeStyles(theme => ({
 
 export const ListCategories = props => {
   const { categories, columns } = useSelector(state => state.categories);
+  const [selectedRowData, setSelectedRowData] = useState("");
+  const dispatch = useDispatch();
   const { push } = props.history;
   const classes = useStyles();
+  const { deleteCategory } = Creators;
 
   const [open, setOpen] = useState(false);
 
   const handleClose = () => setOpen(false);
 
+  const handleDelete = () => {
+    dispatch(deleteCategory(selectedRowData.id));
+    handleClose();
+  };
+
   return (
     <Header>
-      <Paper className={classes.root}>
+      <div className={classes.root}>
         <Grid container spacing={1} direction="column">
           <Grid item xs={12} align="right">
             <Button variant="outlined" component={Link} to="/create-category">
@@ -60,6 +69,8 @@ export const ListCategories = props => {
                     tooltip: "Delete",
                     onClick: (event, rowData) => {
                       setOpen(true);
+                      setSelectedRowData(rowData);
+                      // console.log(rowData.id);
                     }
                   }
                 ]}
@@ -77,18 +88,19 @@ export const ListCategories = props => {
                 aria-labelledby="form-dialog-title"
               >
                 <DialogTitle id="form-dialog-title">
-                  Você irá apagar uma categoria
+                  Você irá apagar a categoria
                 </DialogTitle>
                 <DialogContent>
                   <DialogContentText>
-                    Tem certeza que deseja apagá-la?
+                    Tem certeza que deseja apagar a categoria{" "}
+                    {selectedRowData.nome}?
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                   <Button size="small" onClick={handleClose} color="primary">
                     Cancelar
                   </Button>
-                  <Button onClick={handleClose} size="small">
+                  <Button onClick={handleDelete} size="small">
                     Apagar
                   </Button>
                 </DialogActions>
@@ -96,7 +108,7 @@ export const ListCategories = props => {
             </Paper>
           </Grid>
         </Grid>
-      </Paper>
+      </div>
     </Header>
   );
 };
