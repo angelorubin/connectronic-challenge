@@ -12,7 +12,7 @@ export const Root = () => {
   return (
     <Router>
       <Switch>
-        <Route exact path="/login" component={Login} />
+        <Route exact path="/" component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/create-category" component={CreateCategory} />
